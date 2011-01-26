@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:spark="de.patrickheinzelmann.components.spark.*" width="480" height="300">
+	<fx:Declarations>
+		<!-- Platzieren Sie nichtvisuelle Elemente (z. B. Dienste, Wertobjekte) hier -->
+	</fx:Declarations>
+
+	<s:Label x="39" y="31" width="110" text="MX" textAlign="center" verticalAlign="top"/>
+	<s:Label x="181" y="31" width="110" text="Standard Spark" textAlign="center" verticalAlign="top"/>
+	<s:Label x="321" y="31" width="110" text="Spark with Highlight" textAlign="center"
+			 verticalAlign="top"/>
+
+	<mx:HSlider x="37" y="70" width="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5"/>
+	<s:HSlider x="185" y="80" maximum="10" minimum="0" value="5"/>
+	<spark:HSlider x="324" y="80" minimum="0" maximum="10" value="5"/>
+	
+	<mx:VSlider x="80" y="117" height="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5" />
+	<s:VSlider x="230" y="120" maximum="10" minimum="0" value="5"/>
+	<spark:VSlider x="377" y="120" maximum="10" minimum="0" value="5"/>
+	
+	<s:CheckBox id="cb" x="27" y="244" label="show Track Highlight for MX Components" selected="true"/>
+
+</s:Application>
