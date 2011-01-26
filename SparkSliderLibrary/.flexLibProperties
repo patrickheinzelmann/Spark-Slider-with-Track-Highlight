@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="de.patrickheinzelmann.components.spark.skins.HSliderSkin"/>
+    <classEntry path="de.patrickheinzelmann.components.spark.skins.HSliderTrackHighLightSkin"/>
+    <classEntry path="de.patrickheinzelmann.components.spark.skins.VSliderSkin"/>
+    <classEntry path="de.patrickheinzelmann.components.spark.skins.VSliderTrackHighLightSkin"/>
+    <classEntry path="de.patrickheinzelmann.components.spark.VSlider"/>
+    <classEntry path="de.patrickheinzelmann.components.spark.HSlider"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>
