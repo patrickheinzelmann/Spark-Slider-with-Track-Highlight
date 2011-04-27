@@ -29,7 +29,7 @@ VSliderThumbSkin and VSliderTrackSkin classes, respectively.
     <fx:Script fb:purpose="styling">
         /* Define the skin elements that should not be colorized. 
            For slider, the skin itself is colorized but the individual parts are not. */
-        static private const exclusions:Array = ["track", "thumb"];
+        static private const exclusions:Array = ["track", "thumb", "trackHighLight"];
 
         /**
          * @private

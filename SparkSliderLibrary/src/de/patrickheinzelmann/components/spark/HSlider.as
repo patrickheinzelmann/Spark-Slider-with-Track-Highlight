@@ -5,11 +5,14 @@ package de.patrickheinzelmann.components.spark
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-
+	
+	import mx.core.InteractionMode;
 	import mx.events.ResizeEvent;
 	
 	import spark.components.Button;
 	import spark.components.HSlider;
+	import spark.components.supportClasses.AnimationTarget;
+	import spark.effects.animation.Animation;
 	
 	/**
 	 *  The color for the slider track when it is selected.
@@ -19,7 +22,7 @@ package de.patrickheinzelmann.components.spark
 	 *  @playerversion AIR 1.5
 	 *  @productversion Flex 4
 	 */
-	[Style(name="trackHighlightColor", type="Class", inherit="no")]
+	[Style(name="accentColor", type="uint", format="Color", inherit="yes", theme="spark")]
 	
 	/**
 	 *  Specifies whether to enable track highlighting between thumbs
@@ -36,19 +39,21 @@ package de.patrickheinzelmann.components.spark
 	
 	public class HSlider extends spark.components.HSlider
 	{
+		/**
+		 *  @private
+		 */
+		private var animator:Animation = null;
+		
 		[SkinPart(required="false")]
 		public var trackHighLight:Button;
 		
 		[Bindable]
-		private var _trackHighlightColor:uint; 
+		private var _accentColor:uint;
+		private var accentColorChanged:Boolean
 		
 		[Bindable]
 		private var _showTrackHighlight:Boolean = true;
-		
-		/**
-		 *  @private
-		 */
-		private var trackHighlightChanged:Boolean = true;
+		private var showTrackHighlightChanged:Boolean;
 		
 		public function HSlider()
 		{
@@ -97,6 +102,10 @@ package de.patrickheinzelmann.components.spark
 			{
 				trackHighLight.focusEnabled = false;
 				trackHighLight.addEventListener(ResizeEvent.RESIZE, trackHighLight_resizeHandler);
+				
+				// track is only clickable if in mouse interactionMode
+				if (getStyle("interactionMode") == InteractionMode.MOUSE)
+					trackHighLight.addEventListener(MouseEvent.MOUSE_DOWN, trackHighLight_mouseDownHandler);
 			}
 		}
 		
@@ -109,9 +118,21 @@ package de.patrickheinzelmann.components.spark
 			
 	 		if (instance == trackHighLight)
 			{
-				trackHighLight.removeEventListener(MouseEvent.MOUSE_DOWN, track_mouseDownHandler);
+				trackHighLight.removeEventListener(MouseEvent.MOUSE_DOWN, trackHighLight_mouseDownHandler);
 				trackHighLight.removeEventListener(ResizeEvent.RESIZE, trackHighLight_resizeHandler);
 			}
+		}
+		
+		/**
+		 *  @private
+		 *  Handle mouse-down events for the slider track hightlight. We
+		 *  calculate the value based on the new position and then
+		 *  move the thumb to the correct location as well as
+		 *  commit the value.
+		 */
+		protected function trackHighLight_mouseDownHandler(event:MouseEvent):void
+		{
+			this.track_mouseDownHandler(event);
 		}
 		
 		/**
@@ -132,18 +153,13 @@ package de.patrickheinzelmann.components.spark
 			super.styleChanged(styleProp);
 			if (styleProp == "showTrackHighlight" || anyStyle)
 			{
-				trackHighlightChanged = true;
+				showTrackHighlightChanged = true;
 				invalidateProperties();
 			}
 			
-			if (styleProp == "trackHighlightColor" || anyStyle)
+			if (styleProp == "accentColor" || anyStyle)
 			{
-/*				if (innerSlider && highlightTrack)
-				{
-					innerSlider.removeChild(DisplayObject(highlightTrack));
-					highlightTrack = null;
-				}*/
-				trackHighlightChanged = true;
+				accentColorChanged = true;
 				invalidateProperties();
 			}
 			
@@ -154,27 +170,34 @@ package de.patrickheinzelmann.components.spark
 		{
 			super.commitProperties();
 			
-			if (trackHighlightChanged)
+			if (showTrackHighlightChanged)
 			{
-				trackHighlightChanged = false;
+				this.trackHighLight.visible = this._showTrackHighlight;
+				showTrackHighlightChanged = false;
+			}
+			if(accentColorChanged){
+				this.trackHighLight.setStyle("themeColor", this.accentColor);
+				accentColorChanged = false;
 			}
 		}
 		
-		public function set trackHighlightColor(color:uint):void
+		public function set accentColor(color:uint):void
 		{
-			this._trackHighlightColor = color;
+			this._accentColor = color;
+			accentColorChanged = true;
 			this.invalidateProperties();
 		}
 		
 		
-		public function get trackHighlightColor():uint
+		public function get accentColor():uint
 		{
-			return this._trackHighlightColor;
+			return this._accentColor;
 		}
 		
 		public function set showTrackHighlight(show:Boolean):void
 		{
 			this._showTrackHighlight = show;
+			showTrackHighlightChanged = true;
 			this.invalidateProperties();
 		}
 		
