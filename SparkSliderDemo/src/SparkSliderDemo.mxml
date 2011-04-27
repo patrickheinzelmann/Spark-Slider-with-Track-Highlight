@@ -2,7 +2,17 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:spark="de.patrickheinzelmann.components.spark.*" width="480" height="300">
+			   xmlns:spark="de.patrickheinzelmann.components.spark.*" width="480" height="300" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.events.FlexEvent;
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				colorPicker.selectedColor = this.getStyle("themeColor");
+			}
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Platzieren Sie nichtvisuelle Elemente (z. B. Dienste, Wertobjekte) hier -->
 	</fx:Declarations>
@@ -12,14 +22,21 @@
 	<s:Label x="321" y="31" width="110" text="Spark with Highlight" textAlign="center"
 			 verticalAlign="top"/>
 
-	<mx:HSlider x="37" y="70" width="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5"/>
+	<mx:HSlider x="37" y="70" width="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5" accentColor="{colorPicker.selectedColor}"/>
 	<s:HSlider x="185" y="80" maximum="10" minimum="0" value="5"/>
-	<spark:HSlider x="324" y="80" minimum="0" maximum="10" value="5"/>
+	<spark:HSlider x="324" y="80" minimum="0" maximum="10" value="5" showTrackHighlight="{cb.selected}" accentColor="{colorPicker.selectedColor}"/>
 	
-	<mx:VSlider x="80" y="117" height="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5" />
+	<mx:VSlider x="80" y="117" height="110" maximum="10" minimum="0" showTrackHighlight="{cb.selected}" value="5" accentColor="{colorPicker.selectedColor}"/>
 	<s:VSlider x="230" y="120" maximum="10" minimum="0" value="5"/>
-	<spark:VSlider x="377" y="120" maximum="10" minimum="0" value="5"/>
+	<spark:VSlider x="377" y="120" maximum="10" minimum="0" value="5" showTrackHighlight="{cb.selected}" accentColor="{colorPicker.selectedColor}"/>
 	
-	<s:CheckBox id="cb" x="27" y="244" label="show Track Highlight for MX Components" selected="true"/>
+	<s:VGroup x="27" y="244">
+		<s:CheckBox id="cb" label="show Track Highlight for MX Components and Spark with Highlight" selected="true"/>
+		<s:HGroup height="30" verticalAlign="middle">
+			<mx:ColorPicker id="colorPicker" />
+			<s:Label text="Color of the Track Highlight"/>
+		</s:HGroup>
+	</s:VGroup>
+	
 
 </s:Application>
