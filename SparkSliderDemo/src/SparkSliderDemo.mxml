@@ -31,7 +31,7 @@
 	<spark:VSlider x="377" y="120" maximum="10" minimum="0" value="5" showTrackHighlight="{cb.selected}" accentColor="{colorPicker.selectedColor}"/>
 	
 	<s:VGroup x="27" y="244">
-		<s:CheckBox id="cb" label="show Track Highlight for MX Components and Spark with Highlight" selected="true"/>
+		<s:CheckBox id="cb" label="show Track Highlight for MX Components and Spark with Track Highlight" selected="true"/>
 		<s:HGroup height="30" verticalAlign="middle">
 			<mx:ColorPicker id="colorPicker" />
 			<s:Label text="Color of the Track Highlight"/>
